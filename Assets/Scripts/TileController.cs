@@ -6,8 +6,14 @@ public class TileController : MonoBehaviour {
     private Color[] color;
     private int[] numbers;
 
+    //Setting the Box's color
+    private GameObject box;
+
 	// Use this for initialization
 	void Start () {
+
+        box = GameObject.FindGameObjectWithTag("Box");
+
         color = new Color[7];
         numbers = new int[3];
 
@@ -39,6 +45,7 @@ public class TileController : MonoBehaviour {
             }
             numbers[i] = theNumber;
         }
+        box.GetComponent<SpriteRenderer>().material.SetColor("_EmissionColor", color[(int)Random.value * numbers.Length]);
 
     }
 	
