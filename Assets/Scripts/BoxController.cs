@@ -7,6 +7,7 @@ public class BoxController : MonoBehaviour {
     private GameObject box;
     private GameObject theCamera;
 
+
 	// Use this for initialization
 	void Start () {
 
@@ -15,7 +16,6 @@ public class BoxController : MonoBehaviour {
 
         Color[] color = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().color;
         int[] numbers = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().numbers;
-
         box.GetComponent<SpriteRenderer>().color = color[numbers[(int) (Random.value * numbers.Length)]];
 
     }
@@ -27,6 +27,12 @@ public class BoxController : MonoBehaviour {
         {
             Destroy(gameObject, 0.3f);
         }
-
+    /*    if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position += new Vector3(-2 * Time.deltaTime, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.RightArrow)) {
+            transform.position += new Vector3(2 * Time.deltaTime, 0, 0);
+        }*/
 	}
 }
