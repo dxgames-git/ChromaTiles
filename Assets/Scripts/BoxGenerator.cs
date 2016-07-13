@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileController : MonoBehaviour {
+public class BoxGenerator : MonoBehaviour {
 
-    private Color[] color;
-    private int[] numbers;
+    private GameObject theCamera;
+    public GameObject box;
 
-    //Setting the Box's color
-    private GameObject box;
+    public Color[] color;
+    public int[] numbers;
 
-	// Use this for initialization
-	void Start () {
-
-        box = GameObject.FindGameObjectWithTag("Box");
+    // Use this for initialization
+    void Start () {
+        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
 
         color = new Color[7];
         numbers = new int[3];
@@ -32,7 +32,7 @@ public class TileController : MonoBehaviour {
         }
         for (int i = 0; i < numbers.Length; i++)
         {
-            int theNumber = (int) (Random.value * color.Length);
+            int theNumber = (int)(Random.value * color.Length);
             for (int j = 0; j < numbers.Length; j++)
             {
                 if (numbers[j] == theNumber)
@@ -45,21 +45,15 @@ public class TileController : MonoBehaviour {
             }
             numbers[i] = theNumber;
         }
-        box.GetComponent<SpriteRenderer>().material.SetColor("_EmissionColor", color[(int)Random.value * numbers.Length]);
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-	    if (Input.GetKeyDown(KeyCode.LeftArrow)/*Add Touch Input Left*/)
+        if (theCamera.transform.position.y + 10f > transform.position.y)
         {
-
+            Instantiate(box, new Vector3(0, transform.position.y), transform.rotation);
+            transform.position = new Vector3(0, transform.position.y + 7f);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-
-        }
-
 	}
 }
