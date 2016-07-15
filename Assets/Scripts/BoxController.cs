@@ -3,6 +3,9 @@ using System.Collections;
 
 public class BoxController : MonoBehaviour {
 
+    //Death Scene
+    private UIManager deadPanel;
+
     //Setting the Box's color
     private GameObject box;
     private GameObject theCamera;
@@ -18,6 +21,8 @@ public class BoxController : MonoBehaviour {
         int picker = numbers[(int)(Random.value * numbers.Length)];
         gameObject.GetComponent<SpriteRenderer>().color = color[picker];
         boxColor = color[picker];
+
+        deadPanel = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
     }
 	
@@ -40,7 +45,7 @@ public class BoxController : MonoBehaviour {
         }
         else
         {
-            //Invoke Death Scene
+            deadPanel.isDead = true;
         }
     }
 
