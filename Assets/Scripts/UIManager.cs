@@ -11,15 +11,21 @@ public class UIManager : MonoBehaviour
     public bool isPaused;
     public bool isRestart;
     public bool isDead;
+    public bool isMain;
+    public bool pauseWork;
+    public bool deathWork;
 
     private GameObject Box;
+
     // Use this for initialization
     void Start()
     {
         isPaused = false;
         isRestart = false;
         isDead = false;
-        Box = GameObject.FindGameObjectWithTag("Box");
+        Box = GameObject.FindGameObjectWithTag("Box");;
+        pauseWork = false;
+        deathWork = false;
     }
 
     // Update is called once per frame
@@ -43,9 +49,13 @@ public class UIManager : MonoBehaviour
         {
             Application.LoadLevel(Application.loadedLevel);
         }
+        if (isMain) {
+            Application.LoadLevel("Title Screen");
+        }
         if (isDead) {
             deathPanel.SetActive(true);
             Time.timeScale = 0.0f;
+            deathWork = true;
         }
     }
     void pauseGame(bool state)
@@ -53,11 +63,13 @@ public class UIManager : MonoBehaviour
         if (state)
         {
             Time.timeScale = 0.0f; //Paused
+            
         }
         else {
             Time.timeScale = 1.0f; //Unpaused
         }
         pausePanel.SetActive(state);
+        pauseWork = state;
     }
     public void switchPause()
     {
@@ -72,5 +84,8 @@ public class UIManager : MonoBehaviour
     public void restart()
     {
         isRestart = true;
+    }
+    public void mainMenu() {
+        isMain = true;
     }
 }

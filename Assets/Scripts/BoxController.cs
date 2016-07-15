@@ -10,6 +10,8 @@ public class BoxController : MonoBehaviour {
     private GameObject box;
     private GameObject theCamera;
     public Color boxColor;
+    //Score
+    private ScoreManager scoreUp;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +25,7 @@ public class BoxController : MonoBehaviour {
         boxColor = color[picker];
 
         deadPanel = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        scoreUp = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScoreManager>();
 
     }
 	
@@ -42,6 +45,7 @@ public class BoxController : MonoBehaviour {
         {
             //Increase Score
             Destroy(gameObject, 0.05f);
+            scoreUp.touchRightBox();
         }
         else
         {
