@@ -3,26 +3,45 @@ using System.Collections;
 
 public class TileController : MonoBehaviour {
 
-    public float distanceFromMiddle;
+    public int number;
+    private GameObject theCamera;
+    public Color tileColor;
 
-    private Transform camera;
 	// Use this for initialization
 	void Start () {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-	}
+
+        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        Invoke("SetColor", 0.01f);
+
+    }
 	
+    void SetColor ()
+    {
+        Color[] color = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().color;
+        int[] numbers = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().numbers;
+
+        tileColor = color[numbers[number]];
+        gameObject.GetComponent<SpriteRenderer>().color = tileColor;
+    }
+
 	// Update is called once per frame
 	void Update () {
 
-        transform.position = new Vector3(transform.position.x, camera.position.y - distanceFromMiddle, 0);
-
-        if (Input.GetKey(KeyCode.LeftArrow))
+	    if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.position += new Vector3(-2 * Time.deltaTime, 0, 0);
+            transform.position -= new Vector3(1.87f, 0);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            transform.position += new Vector3(2 * Time.deltaTime, 0, 0);
+            transform.position += new Vector3(1.87f, 0);
+        }
+        if (transform.position.x < -1.87f)
+        {
+            transform.position = new Vector3(1.87f, theCamera.transform.position.y - 3.6f);
+        }
+        else if (transform.position.x > 1.87f)
+        {
+            transform.position = new Vector3(-1.87f, theCamera.transform.position.y - 3.6f);
         }
 
     }
