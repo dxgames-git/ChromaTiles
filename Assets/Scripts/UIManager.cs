@@ -73,11 +73,11 @@ public class UIManager : MonoBehaviour
     }
     public void switchPause()
     {
-        if (isPaused)
+        if (isPaused && !deathWork)
         {
             isPaused = false; //Changes the bool value 
         }
-        else {
+        else if (!isPaused && !deathWork){
             isPaused = true;
         }
     }
