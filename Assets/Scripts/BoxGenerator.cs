@@ -5,6 +5,10 @@ public class BoxGenerator : MonoBehaviour {
 
     private GameObject theCamera;
     public GameObject box;
+    public GameObject triangle;
+    public GameObject circle;
+
+    private GameObject[] objects;
 
     public Color[] color;
     public int[] numbers;
@@ -45,14 +49,18 @@ public class BoxGenerator : MonoBehaviour {
             }
             numbers[i] = theNumber;
         }
-
+        //Generating different objects
+        objects = new GameObject[3];
+        objects[0] = box;
+        objects[1] = circle;
+        objects[2] = triangle;
     }
 	
 	// Update is called once per frame
 	void Update () {
         if (theCamera.transform.position.y + 10f > transform.position.y)
         {
-            Instantiate(box, new Vector3(0, transform.position.y), transform.rotation);
+            Instantiate(objects[(int)(Mathf.Round(Random.value * 2))], new Vector3(0, transform.position.y), transform.rotation);
             transform.position = new Vector3(0, transform.position.y + 7f);
         }
 	}
