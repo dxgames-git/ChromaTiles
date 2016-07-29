@@ -7,6 +7,7 @@ public class BoxGenerator : MonoBehaviour {
     public GameObject box;
     public GameObject triangle;
     public GameObject circle;
+    public int gameDifficulty;
 
     private GameObject[] objects;
 
@@ -19,7 +20,7 @@ public class BoxGenerator : MonoBehaviour {
         transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
 
         color = new Color[7];
-        numbers = new int[3];
+        numbers = new int[gameDifficulty];
 
         color[0] = Color.red;
         color[1] = Color.white;

@@ -3,16 +3,7 @@ using System.Collections;
 
 public class SceneLoader : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Application.LoadLevel("Main");
-        }
-	}
+   public void startLevel() {
+        Application.LoadLevel("Main");
+    }
 }
