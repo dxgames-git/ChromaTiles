@@ -4,8 +4,12 @@ using System.Collections;
 public class TileController : MonoBehaviour {
 
     public int number;
-    private GameObject theCamera;
     public Color tileColor;
+
+    private GameObject theCamera;
+    private BoxGenerator boxGen;
+    private float width;
+    private float scalar;
 
     //Stopping movement when paused or dead
     private UIManager stopMovement;
@@ -14,18 +18,12 @@ public class TileController : MonoBehaviour {
 	void Start () {
 
         theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        Invoke("SetColor", 0.01f);
         stopMovement = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        boxGen = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
 
-    }
-	
-    void SetColor ()
-    {
-        Color[] color = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().color;
-        int[] numbers = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().numbers;
-
-        tileColor = color[numbers[number]];
-        gameObject.GetComponent<SpriteRenderer>().color = tileColor;
+        width = 5.61f / boxGen.numbers.Length;
+        int level = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
+        scalar = (level / 2);
     }
 
 	// Update is called once per frame
@@ -35,19 +33,19 @@ public class TileController : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position -= new Vector3(1.87f, 0);
+                transform.position -= new Vector3(width, 0);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position += new Vector3(1.87f, 0);
+                transform.position += new Vector3(width, 0);
             }
-            if (transform.position.x < -1.87f)
+            if (transform.position.x < -width * scalar)
             {
-                transform.position = new Vector3(1.87f, theCamera.transform.position.y - 3.6f);
+                transform.position = new Vector3(width * scalar, theCamera.transform.position.y - 3.6f);
             }
-            else if (transform.position.x > 1.87f)
+            else if (transform.position.x > width * scalar)
             {
-                transform.position = new Vector3(-1.87f, theCamera.transform.position.y - 3.6f);
+                transform.position = new Vector3(-width * scalar, theCamera.transform.position.y - 3.6f);
             }
         }
     }

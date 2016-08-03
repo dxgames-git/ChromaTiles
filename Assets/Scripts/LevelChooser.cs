@@ -3,8 +3,9 @@ using System.Collections;
 
 public class LevelChooser : MonoBehaviour {
 
-    private BoxGenerator differentLevel;
     public int level;
+    private BoxGenerator differentLevel;
+
 	// Use this for initialization
 	void Start () {
         DontDestroyOnLoad(gameObject);
@@ -21,7 +22,7 @@ public class LevelChooser : MonoBehaviour {
     }
     public void levelNormal()
     {
-        level = 4;
+        level = 3;
     }
     public void levelHard()
     {

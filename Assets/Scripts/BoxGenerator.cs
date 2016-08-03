@@ -3,12 +3,12 @@ using System.Collections;
 
 public class BoxGenerator : MonoBehaviour {
 
-    private GameObject theCamera;
     public GameObject box;
     public GameObject triangle;
     public GameObject circle;
     public int gameDifficulty;
 
+    private GameObject theCamera;
     private GameObject[] objects;
 
     public Color[] color;
