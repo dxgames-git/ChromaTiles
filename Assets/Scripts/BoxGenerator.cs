@@ -19,6 +19,8 @@ public class BoxGenerator : MonoBehaviour {
         theCamera = GameObject.FindGameObjectWithTag("MainCamera");
         transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
 
+        gameDifficulty = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
+
         color = new Color[7];
         numbers = new int[gameDifficulty];
 
