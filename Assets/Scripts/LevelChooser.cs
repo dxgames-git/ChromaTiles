@@ -4,7 +4,6 @@ using System.Collections;
 public class LevelChooser : MonoBehaviour {
 
     private BoxGenerator differentLevel;
-    public float number;
 	// Use this for initialization
 	void Start () {
         differentLevel = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
@@ -13,18 +12,30 @@ public class LevelChooser : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	}
+
+    //calling the methods using buttons
     public void levelEasy() {
-        differentLevel.gameDifficulty = 3;
-        number = differentLevel.gameDifficulty;
+        Invoke("changeLevelEasy", 0.001f);
     }
     public void levelNormal()
     {
-        differentLevel.gameDifficulty = 4;
-        number = differentLevel.gameDifficulty;
+        Invoke("changeLevelNormal", 0.05f);
     }
     public void levelHard()
     {
+        Invoke("changeLevelHard", 0.05f);
+    }
+
+    //delaying the methods
+    void changeLevelEasy() {
+        differentLevel.gameDifficulty = 3;
+    }
+    void changeLevelNormal()
+    {
+        differentLevel.gameDifficulty = 4;
+    }
+    void changeLevelHard()
+    {
         differentLevel.gameDifficulty = 5;
-        number = differentLevel.gameDifficulty;
     }
 }
