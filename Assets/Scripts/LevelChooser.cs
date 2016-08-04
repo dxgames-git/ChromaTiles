@@ -14,6 +14,9 @@ public class LevelChooser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameObject.FindGameObjectsWithTag("LevelChooser").Length > 1) {
+            Destroy(GameObject.FindGameObjectsWithTag("LevelChooser")[0]);
+        }
 	}
 
     //calling the methods using buttons

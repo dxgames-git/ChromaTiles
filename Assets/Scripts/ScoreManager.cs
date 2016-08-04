@@ -9,7 +9,9 @@ public class ScoreManager : MonoBehaviour
     public Text scoreText;
     public Text highScoreText;
     public Text deathHighScore;
-    
+
+    //public Text highScoreTextHard;
+    //public Text deathHighScoreHard;
 
     private float scoreCount;
     private float highScoreCount;
@@ -17,12 +19,20 @@ public class ScoreManager : MonoBehaviour
     public float pointsPerSecond;
     public bool scoreIncreasing;
 
+    private LevelChooser whichLevel;
+    public int level;
+
     // Use this for initialization
     void Start()
     {
-        if (PlayerPrefs.HasKey("HighScore"))
+        whichLevel = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>();
+        level = whichLevel.level;
+        if (level == 3 && PlayerPrefs.HasKey("HighScore"))
         {
             highScoreCount = PlayerPrefs.GetFloat("HighScore");
+        }
+        else if (level == 5 && PlayerPrefs.HasKey("HighScoreHard")) {
+            highScoreCount = PlayerPrefs.GetFloat("HighScoreHard");
         }
     }
 
@@ -32,7 +42,13 @@ public class ScoreManager : MonoBehaviour
         if (scoreCount > highScoreCount)
         {
             highScoreCount = scoreCount;
-            PlayerPrefs.SetFloat("HighScore", highScoreCount);
+            if (level == 3)
+            {
+                PlayerPrefs.SetFloat("HighScore", highScoreCount);
+            }
+            else if (level == 5) {
+                PlayerPrefs.SetFloat("HighScoreHard", highScoreCount);
+            }
         }
         scoreText.text = "Score: " + Mathf.Round(scoreCount);
         highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
