@@ -12,7 +12,8 @@ public class BoxController : MonoBehaviour {
     public Color boxColor;
     //Score
     private ScoreManager scoreUp;
-
+    //Particle System
+    public GameObject glowParticle;
 	// Use this for initialization
 	void Start () {
 
@@ -43,6 +44,7 @@ public class BoxController : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<TileController>().tileColor.Equals(boxColor))
         {
+            Instantiate(glowParticle, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,-1), gameObject.transform.rotation);
             //Increase Score
             Destroy(gameObject, 0.05f);
             scoreUp.touchRightBox();
