@@ -40,14 +40,12 @@ public class BoxGenerator : MonoBehaviour {
         for (int i = 0; i < numbers.Length; i++)
         {
             int theNumber = (int)(Random.value * color.Length);
-            for (int j = 0; j < numbers.Length; j++)
+            for (int j = i - 1; j >= 0; j--)
             {
                 if (numbers[j] == theNumber)
                 {
-                    while (numbers[j] == theNumber)
-                    {
-                        theNumber = (int)(Random.value * color.Length);
-                    }
+                    theNumber = (int)(Random.value * color.Length);
+                    j = i;
                 }
             }
             numbers[i] = theNumber;

@@ -44,7 +44,8 @@ public class BoxController : MonoBehaviour {
     {
         if (other.gameObject.GetComponent<TileController>().tileColor.Equals(boxColor))
         {
-            Instantiate(glowParticle, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y,-1), gameObject.transform.rotation);
+            GameObject glowEffect = (GameObject) Instantiate(glowParticle, new Vector3(0, other.gameObject.transform.position.y + 1f), gameObject.transform.rotation);
+            glowEffect.transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
             //Increase Score
             Destroy(gameObject, 0.05f);
             scoreUp.touchRightBox();
