@@ -3,17 +3,17 @@ using System.Collections;
 
 public class BackgroundController : MonoBehaviour {
 
-    public Color lerpedColor = Color.white;
+    public Sprite[] images = new Sprite[10];
 
     // Use this for initialization
     void Start () {
-        gameObject.GetComponent<SpriteRenderer>().color = lerpedColor;
+        //Initializes background randomly to one of the ten
+        gameObject.GetComponent<SpriteRenderer>().sprite = images[(int) (Random.value * images.Length)];
     }
 	
 	// Update is called once per frame
 	void Update () {
-        lerpedColor = Color.Lerp(Color.white, Color.black, Mathf.PingPong(Time.time, 1));
-        gameObject.GetComponent<SpriteRenderer>().color = lerpedColor;
+        //Implement scrolling
     }
 
 }
