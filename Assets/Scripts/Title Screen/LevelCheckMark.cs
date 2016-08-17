@@ -5,16 +5,17 @@ public class LevelCheckMark : MonoBehaviour {
 
     private bool didPressEasy;
     private bool didPressHard;
-    public GameObject checkMark;
-    private GameObject easyBox;
-    private GameObject hardBox;
+    private GameObject checkMarkEasy;
+    private GameObject checkMarkHard;
 
 	// Use this for initialization
 	void Start () {
         didPressEasy = false;
         didPressHard = false;
-        easyBox = GameObject.FindGameObjectWithTag("EasySquare");
-        hardBox = GameObject.FindGameObjectWithTag("HardSquare");
+        checkMarkEasy = GameObject.FindGameObjectWithTag("CheckMarkEasy");
+        checkMarkHard = GameObject.FindGameObjectWithTag("CheckMarkHard");
+        checkMarkEasy.SetActive(false);
+        checkMarkHard.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -24,18 +25,18 @@ public class LevelCheckMark : MonoBehaviour {
     public void pressedEasy() {
         didPressEasy = true;
         if (didPressHard == true) {
-            Destroy(checkMark);
+            checkMarkHard.SetActive(false);
         }
-        Instantiate(checkMark, new Vector3(easyBox.transform.position.x, easyBox.transform.position.y, easyBox.transform.position.z), easyBox.transform.rotation);
+        checkMarkEasy.SetActive(true);
         didPressHard = false;
     }
     public void pressedHard() {
         didPressHard = true;
         if (didPressEasy == true)
         {
-            Destroy(checkMark);
+            checkMarkEasy.SetActive(false);
         }
-        Instantiate(checkMark, new Vector3(hardBox.transform.position.x, hardBox.transform.position.y, hardBox.transform.position.z), hardBox.transform.rotation);
-        didPressHard = false;
+        checkMarkHard.SetActive(true);
+        didPressEasy = false;
     }
 }
