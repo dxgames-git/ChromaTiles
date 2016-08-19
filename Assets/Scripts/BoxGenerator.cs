@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BoxGenerator : MonoBehaviour {
+public class BoxGenerator : MonoBehaviour
+{
 
     public GameObject box;
     public GameObject triangle;
@@ -15,7 +16,8 @@ public class BoxGenerator : MonoBehaviour {
     public int[] numbers;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         theCamera = GameObject.FindGameObjectWithTag("MainCamera");
         transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
 
@@ -39,12 +41,12 @@ public class BoxGenerator : MonoBehaviour {
         }
         for (int i = 0; i < numbers.Length; i++)
         {
-            int theNumber = (int)(Random.value * color.Length);
+            int theNumber = (int) (Random.value * color.Length);
             for (int j = i - 1; j >= 0; j--)
             {
                 if (numbers[j] == theNumber)
                 {
-                    theNumber = (int)(Random.value * color.Length);
+                    theNumber = (int) (Random.value * color.Length);
                     j = i;
                 }
             }
@@ -56,13 +58,15 @@ public class BoxGenerator : MonoBehaviour {
         objects[1] = circle;
         objects[2] = triangle;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (theCamera.transform.position.y + 10f > transform.position.y)
         {
             Instantiate(objects[(int) Random.value * 3], new Vector3(0, transform.position.y), transform.rotation);
             transform.position = new Vector3(0, transform.position.y + 7f);
         }
-	}
+    }
+
 }

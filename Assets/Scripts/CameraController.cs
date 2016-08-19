@@ -4,18 +4,27 @@ using System.Collections;
 public class CameraController : MonoBehaviour
 {
 
-    public float modifier;
+    public float scale;
+    public float velocity;
+
+    float modifier;
+    Vector3 previous;
 
     // Use this for initialization
     void Start()
     {
         modifier = 0f;
+        scale = 1f / 5f;//5f = 5 seconds per 1 velocity
     }
 
     // Update is called once per frame
     void Update()
     {
-        modifier += Time.deltaTime * .2f;//.005f;
-        transform.position += new Vector3(0, 1f * Time.deltaTime * (1 + modifier));
+        modifier += Time.deltaTime * scale;
+        transform.position += new Vector3(0, Time.deltaTime * (1 + modifier));
+
+        velocity = ((transform.position - previous).magnitude) / Time.deltaTime;
+        previous = transform.position;
     }
+
 }

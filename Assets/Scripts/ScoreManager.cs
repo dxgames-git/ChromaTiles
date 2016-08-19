@@ -31,7 +31,8 @@ public class ScoreManager : MonoBehaviour
         {
             highScoreCount = PlayerPrefs.GetFloat("HighScore");
         }
-        else if (level == 5 && PlayerPrefs.HasKey("HighScoreHard")) {
+        else if (level == 5 && PlayerPrefs.HasKey("HighScoreHard"))
+        {
             highScoreCount = PlayerPrefs.GetFloat("HighScoreHard");
         }
     }
@@ -46,7 +47,8 @@ public class ScoreManager : MonoBehaviour
             {
                 PlayerPrefs.SetFloat("HighScore", highScoreCount);
             }
-            else if (level == 5) {
+            else if (level == 5)
+            {
                 PlayerPrefs.SetFloat("HighScoreHard", highScoreCount);
             }
         }
@@ -54,7 +56,9 @@ public class ScoreManager : MonoBehaviour
         highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
         deathHighScore.text = highScoreText.text;
     }
-    public void touchRightBox() {
+    public void touchRightBox()
+    {
         scoreCount += 1;
     }
+
 }

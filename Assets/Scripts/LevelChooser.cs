@@ -1,26 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelChooser : MonoBehaviour {
+public class LevelChooser : MonoBehaviour
+{
 
     public int level;
     private BoxGenerator differentLevel;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         DontDestroyOnLoad(gameObject);
         //differentLevel = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (GameObject.FindGameObjectsWithTag("LevelChooser").Length > 1) {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameObject.FindGameObjectsWithTag("LevelChooser").Length > 1)
+        {
             Destroy(GameObject.FindGameObjectsWithTag("LevelChooser")[0]);
         }
-	}
+    }
 
     //calling the methods using buttons
-    public void levelEasy() {
+    public void levelEasy()
+    {
         level = 3;
     }
     public void levelNormal()
@@ -32,16 +37,4 @@ public class LevelChooser : MonoBehaviour {
         level = 5;
     }
 
-    //delaying the methods
-    /*void changeLevelEasy() {
-        differentLevel.gameDifficulty = 3;
-    }
-    void changeLevelNormal()
-    {
-        differentLevel.gameDifficulty = 4;
-    }
-    void changeLevelHard()
-    {
-        differentLevel.gameDifficulty = 5;
-    }*/
 }

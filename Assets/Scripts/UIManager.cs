@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -23,7 +24,8 @@ public class UIManager : MonoBehaviour
         isPaused = false;
         isRestart = false;
         isDead = false;
-        Box = GameObject.FindGameObjectWithTag("Box");;
+        Box = GameObject.FindGameObjectWithTag("Box");
+        ;
         pauseWork = false;
         deathWork = false;
     }
@@ -37,7 +39,8 @@ public class UIManager : MonoBehaviour
         {
             pauseGame(true);
         }
-        else {
+        else
+        {
             pauseGame(false);
         }
 
@@ -49,10 +52,13 @@ public class UIManager : MonoBehaviour
         {
             Application.LoadLevel(Application.loadedLevel);
         }
-        if (isMain) {
-            Application.LoadLevel("Title Screen");
+        if (isMain)
+        {
+            //Application.LoadLevel("Title Screen"); is outdated *Had to include "using UnityEngine.SceneManagement;" up top
+            SceneManager.LoadScene("Title Screen");
         }
-        if (isDead) {
+        if (isDead)
+        {
             deathPanel.SetActive(true);
             Time.timeScale = 0.0f;
             deathWork = true;
@@ -63,9 +69,10 @@ public class UIManager : MonoBehaviour
         if (state)
         {
             Time.timeScale = 0.0f; //Paused
-            
+
         }
-        else {
+        else
+        {
             Time.timeScale = 1.0f; //Unpaused
         }
         pausePanel.SetActive(state);
@@ -77,7 +84,8 @@ public class UIManager : MonoBehaviour
         {
             isPaused = false; //Changes the bool value 
         }
-        else if (!isPaused && !deathWork){
+        else if (!isPaused && !deathWork)
+        {
             isPaused = true;
         }
     }
@@ -85,7 +93,8 @@ public class UIManager : MonoBehaviour
     {
         isRestart = true;
     }
-    public void mainMenu() {
+    public void mainMenu()
+    {
         isMain = true;
     }
 }

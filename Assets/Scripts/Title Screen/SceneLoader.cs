@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SceneLoader : MonoBehaviour {
+public class SceneLoader : MonoBehaviour
+{
 
-   public void startLevel() {
+    public void startLevel()
+    {
         Application.LoadLevel("Main");
     }
+
 }
