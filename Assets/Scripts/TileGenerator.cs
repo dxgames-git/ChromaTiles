@@ -99,7 +99,7 @@ public class TileGenerator : MonoBehaviour
                 //Move the tile parent
                 Move(1);
                 //Delete right one that is out of bound
-                Destroy(rightTile, 0.11f);
+                Destroy(rightTile, 0.1f);
             }
         }
         else if (!stopMovement.pauseWork && !stopMovement.deathWork && moving)
@@ -108,7 +108,7 @@ public class TileGenerator : MonoBehaviour
             Target = new Vector3(StartPosition.x + (direction * width), /**/theCamera.transform.localPosition.y);
             transform.position = Vector3.Lerp(StartPosition, Target, ElapsedTime / FinishTime);
             transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
-            if (ElapsedTime >= FinishTime)
+            if (ElapsedTime - .0035f >= FinishTime)
             {
                 moving = false;
             }
