@@ -4,16 +4,19 @@ using System.Collections;
 public class LevelCheckMark : MonoBehaviour
 {
 
-    private bool didPressEasy;
-    private bool didPressHard;
+    public bool didPressEasy;
+    public bool didPressHard;
+    private bool choseLevel;
     private GameObject checkMarkEasy;
     private GameObject checkMarkHard;
+
 
     // Use this for initialization
     void Start()
     {
         didPressEasy = false;
         didPressHard = false;
+        choseLevel = false;
         checkMarkEasy = GameObject.FindGameObjectWithTag("CheckMarkEasy");
         checkMarkHard = GameObject.FindGameObjectWithTag("CheckMarkHard");
         checkMarkEasy.SetActive(false);
@@ -27,6 +30,7 @@ public class LevelCheckMark : MonoBehaviour
     }
     public void pressedEasy()
     {
+        choseLevel = true;
         didPressEasy = true;
         if (didPressHard == true)
         {
@@ -37,6 +41,7 @@ public class LevelCheckMark : MonoBehaviour
     }
     public void pressedHard()
     {
+        choseLevel = true;
         didPressHard = true;
         if (didPressEasy == true)
         {
@@ -44,6 +49,9 @@ public class LevelCheckMark : MonoBehaviour
         }
         checkMarkHard.SetActive(true);
         didPressEasy = false;
+    }
+    public bool didChooseLevel() {
+        return choseLevel;
     }
 
 }
