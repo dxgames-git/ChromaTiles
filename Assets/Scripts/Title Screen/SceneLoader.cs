@@ -11,10 +11,10 @@ public class SceneLoader : MonoBehaviour
 
     public void startLevel()
     {
-        if (choseLevel.didChooseLevel() == true)
+        /*if (choseLevel.didChooseLevel() == true)
         {
             Application.LoadLevel("Main");
-        }
+        }*/
     }
 
 }

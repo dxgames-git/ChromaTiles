@@ -17,8 +17,8 @@ public class TitleScreenManager : MonoBehaviour
         didPressEasy = false;
         didPressHard = false;
         choseLevel = false;
-        checkMarkEasy = GameObject.FindGameObjectWithTag("CheckMarkEasy");
-        checkMarkHard = GameObject.FindGameObjectWithTag("CheckMarkHard");
+        checkMarkEasy = GameObject.FindGameObjectWithTag("EasySquare");
+        checkMarkHard = GameObject.FindGameObjectWithTag("HardSquare");
         checkMarkEasy.SetActive(false);
         checkMarkHard.SetActive(false);
     }
@@ -49,8 +49,12 @@ public class TitleScreenManager : MonoBehaviour
         checkMarkHard.SetActive(true);
         didPressEasy = false;
     }
-    public bool didChooseLevel() {
-        return choseLevel;
+    public void startLevel()
+    {
+        if (choseLevel == true)
+        {
+            Application.LoadLevel("Main");
+        }
     }
 
 }
