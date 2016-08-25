@@ -3,19 +3,15 @@ using System.Collections;
 
 public class SceneLoader : MonoBehaviour
 {
-    private GameObject checkMarkEasy;
-    private GameObject checkMarkHard;
-    private LevelCheckMark choseLevel;
+    private TitleScreenManager choseLevel;
 
     void Start() {
-        checkMarkEasy = GameObject.FindGameObjectWithTag("CheckMarkEasy");
-        checkMarkHard = GameObject.FindGameObjectWithTag("CheckMarkHard");
-        choseLevel = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelCheckMark>();
+        choseLevel = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<TitleScreenManager>();
     }
 
     public void startLevel()
     {
-        if (choseLevel.didPressEasy == true || choseLevel.didPressHard == true)
+        if (choseLevel.didChooseLevel() == true)
         {
             Application.LoadLevel("Main");
         }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelCheckMark : MonoBehaviour
+public class TitleScreenManager : MonoBehaviour
 {
 
     public bool didPressEasy;
@@ -26,9 +26,8 @@ public class LevelCheckMark : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
-    public void pressedEasy()
+    void pressedEasy()
     {
         choseLevel = true;
         didPressEasy = true;
@@ -39,7 +38,7 @@ public class LevelCheckMark : MonoBehaviour
         checkMarkEasy.SetActive(true);
         didPressHard = false;
     }
-    public void pressedHard()
+    void pressedHard()
     {
         choseLevel = true;
         didPressHard = true;
