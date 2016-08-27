@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
 
     private GameObject Box;
 
+    //Music
+    private AudioSource gameMusic;
+
     // Use this for initialization
     void Start()
     {
@@ -25,7 +28,7 @@ public class UIManager : MonoBehaviour
         isRestart = false;
         isDead = false;
         Box = GameObject.FindGameObjectWithTag("Box");
-        ;
+        gameMusic = gameObject.GetComponent<AudioSource>();
         pauseWork = false;
         deathWork = false;
     }
@@ -69,11 +72,12 @@ public class UIManager : MonoBehaviour
         if (state)
         {
             Time.timeScale = 0.0f; //Paused
-
+            gameMusic.Pause();
         }
         else
         {
             Time.timeScale = 1.0f; //Unpaused
+            gameMusic.UnPause();
         }
         pausePanel.SetActive(state);
         pauseWork = state;
@@ -92,6 +96,7 @@ public class UIManager : MonoBehaviour
     public void restart()
     {
         isRestart = true;
+        gameMusic.Stop();
     }
     public void mainMenu()
     {
