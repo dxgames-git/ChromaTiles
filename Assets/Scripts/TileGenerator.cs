@@ -56,7 +56,7 @@ public class TileGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!stopMovement.pauseWork && !stopMovement.deathWork && !moving)
+        if (!stopMovement.isPaused && !stopMovement.isDead && !moving)
         {
             transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
             if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -102,7 +102,7 @@ public class TileGenerator : MonoBehaviour
                 Destroy(rightTile, 0.1f);
             }
         }
-        else if (!stopMovement.pauseWork && !stopMovement.deathWork && moving)
+        else if (!stopMovement.isPaused && !stopMovement.isDead && moving)
         {
             ElapsedTime += Time.deltaTime;
             Target = new Vector3(StartPosition.x + (direction * width), /**/theCamera.transform.localPosition.y);

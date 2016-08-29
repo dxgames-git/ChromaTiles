@@ -5,10 +5,7 @@ public class CameraController : MonoBehaviour
 {
 
     public float scale;
-    public float velocity;
-
-    float modifier;
-    Vector3 previous;
+    public float modifier;
 
     // Use this for initialization
     void Start()
@@ -25,9 +22,6 @@ public class CameraController : MonoBehaviour
             modifier += Time.deltaTime * scale;
         }
         transform.position += new Vector3(0, Time.deltaTime * (1 + modifier));
-
-        velocity = ((transform.position - previous).magnitude) / Time.deltaTime;
-        previous = transform.position;
     }
 
 }
