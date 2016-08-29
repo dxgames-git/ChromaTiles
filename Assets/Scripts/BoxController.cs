@@ -36,6 +36,7 @@ public class BoxController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.Rotate(Vector3.forward * -90 * Time.deltaTime);
         if (transform.position.y + 10f < theCamera.transform.position.y)
         {
             Destroy(gameObject, 0.3f);
