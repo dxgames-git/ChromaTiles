@@ -6,9 +6,10 @@ public class TitleScreenManager : MonoBehaviour
 
     public bool didPressEasy;
     public bool didPressHard;
-    private bool choseLevel;
     private GameObject checkMarkEasy;
     private GameObject checkMarkHard;
+    //gets called from the FadeController class
+    public bool fadeStart; 
 
 
     // Use this for initialization
@@ -16,7 +17,7 @@ public class TitleScreenManager : MonoBehaviour
     {
         didPressEasy = false;
         didPressHard = false;
-        choseLevel = false;
+        fadeStart = false;
         checkMarkEasy = GameObject.FindGameObjectWithTag("EasySquare");
         checkMarkHard = GameObject.FindGameObjectWithTag("HardSquare");
         checkMarkEasy.SetActive(false);
@@ -29,7 +30,6 @@ public class TitleScreenManager : MonoBehaviour
     }
     void pressedEasy()
     {
-        choseLevel = true;
         didPressEasy = true;
         if (didPressHard == true)
         {
@@ -40,7 +40,6 @@ public class TitleScreenManager : MonoBehaviour
     }
     void pressedHard()
     {
-        choseLevel = true;
         didPressHard = true;
         if (didPressEasy == true)
         {
@@ -51,10 +50,13 @@ public class TitleScreenManager : MonoBehaviour
     }
     public void startLevel()
     {
-        if (choseLevel == true)
+        if (didPressEasy == true || didPressHard == true)
         {
-            Application.LoadLevel("Main");
+            fadeStart = true;
+            Invoke("loadLevel", 1f);
         }
     }
-
+    void loadLevel() {
+        Application.LoadLevel("Main");
+    }
 }
