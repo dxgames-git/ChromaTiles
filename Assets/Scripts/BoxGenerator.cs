@@ -64,7 +64,7 @@ public class BoxGenerator : MonoBehaviour
     {
         if (theCamera.transform.position.y + 10f > transform.position.y)
         {
-            Instantiate(objects[(int) Random.value * 3], new Vector3(0, transform.position.y), transform.rotation);
+            Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
             transform.position = new Vector3(0, transform.position.y + 7f);
         }
     }
