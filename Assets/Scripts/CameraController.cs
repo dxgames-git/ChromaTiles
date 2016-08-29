@@ -10,14 +10,14 @@ public class CameraController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        modifier = 0f;
+        modifier = 2f;
         scale = 1f / 5f;//5f = 5 seconds per 1 velocity
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (modifier <= 45 * scale)
+        if (modifier <= 47f * scale)
         {
             modifier += Time.deltaTime * scale;
         }

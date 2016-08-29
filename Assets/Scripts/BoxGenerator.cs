@@ -9,19 +9,19 @@ public class BoxGenerator : MonoBehaviour
     public GameObject circle;
     public int gameDifficulty;
 
-    private GameObject theCamera;
-    private GameObject[] objects;
-
     public Color[] color;
     public int[] numbers;
+
+    private GameObject theCamera;
+    private GameObject[] objects;
 
     // Use this for initialization
     void Start()
     {
         theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
-
         gameDifficulty = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
+
+        transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
 
         color = new Color[7];
         numbers = new int[gameDifficulty];
@@ -34,7 +34,7 @@ public class BoxGenerator : MonoBehaviour
         color[5] = Color.cyan;
         color[6] = Color.magenta;
 
-        //Pick X different colors for tiles based on difficulty
+        //Pick "gameDifficulty" different colors for tiles based on difficulty
         for (int i = 0; i < numbers.Length; i++)
         {
             numbers[i] = color.Length;
@@ -65,7 +65,7 @@ public class BoxGenerator : MonoBehaviour
         if (theCamera.transform.position.y + 10f > transform.position.y)
         {
             Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
-            transform.position = new Vector3(0, transform.position.y + 7f);
+            transform.position = new Vector3(0, transform.position.y + 6.75f);
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileGenerator : MonoBehaviour
+public class TileController : MonoBehaviour
 {
 
     //Generic Tile Prefab
@@ -78,7 +78,7 @@ public class TileGenerator : MonoBehaviour
                 //Move the tile parent
                 Move(-1);
                 //Delete left one that is out of bound
-                Destroy(leftTile, 0.11f);
+                Destroy(leftTile, 0.06f);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
@@ -99,7 +99,7 @@ public class TileGenerator : MonoBehaviour
                 //Move the tile parent
                 Move(1);
                 //Delete right one that is out of bound
-                Destroy(rightTile, 0.1f);
+                Destroy(rightTile, 0.06f);
             }
         }
         else if (!stopMovement.isPaused && !stopMovement.isDead && moving)
@@ -121,7 +121,7 @@ public class TileGenerator : MonoBehaviour
         direction = dir;
 
         ElapsedTime = 0;
-        FinishTime = 0.1f;
+        FinishTime = 0.06f;
         StartPosition = transform.position;
         Target = new Vector3(transform.position.x + (dir * width), /**/theCamera.transform.localPosition.y);
 
