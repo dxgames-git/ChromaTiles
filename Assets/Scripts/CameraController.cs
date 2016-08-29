@@ -20,7 +20,10 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        modifier += Time.deltaTime * scale;
+        if (modifier <= 45 * scale)
+        {
+            modifier += Time.deltaTime * scale;
+        }
         transform.position += new Vector3(0, Time.deltaTime * (1 + modifier));
 
         velocity = ((transform.position - previous).magnitude) / Time.deltaTime;

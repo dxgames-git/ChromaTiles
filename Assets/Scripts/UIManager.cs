@@ -16,7 +16,13 @@ public class UIManager : MonoBehaviour
     public bool pauseWork;
     public bool deathWork;
 
+    public AudioClip introMusic;
+    public AudioClip loopMusic;
+
     private GameObject Box;
+
+    private float timeCounter;
+    private bool done;
 
     //Music
     private AudioSource gameMusic;
@@ -31,12 +37,23 @@ public class UIManager : MonoBehaviour
         gameMusic = gameObject.GetComponent<AudioSource>();
         pauseWork = false;
         deathWork = false;
+
+        timeCounter = 0f;
+        done = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        timeCounter += Time.deltaTime;
+        if (timeCounter >= introMusic.length && !done)
+        {
+            done = true;
+            gameMusic.Stop();
+            gameMusic.clip = loopMusic;
+            gameMusic.PlayDelayed(0.75f);
+        }
         //Pause Menu
         if (isPaused)
         {
