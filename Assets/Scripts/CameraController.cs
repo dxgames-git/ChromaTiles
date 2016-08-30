@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     {
         modifier = 2f;
         scale = 1f / 5f;//5f = 5 seconds per 1 velocity
+        fadeOutCall();
     }
 
     // Update is called once per frame
@@ -22,6 +23,11 @@ public class CameraController : MonoBehaviour
             modifier += Time.deltaTime * scale;
         }
         transform.position += new Vector3(0, Time.deltaTime * (1 + modifier));
+    }
+
+    void fadeOutCall()
+    {
+        GameObject.Find("Manager").GetComponent<SceneTransitionManager>().fadeOut(0.5f);
     }
 
 }

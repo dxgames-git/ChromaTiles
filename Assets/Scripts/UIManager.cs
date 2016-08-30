@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public AudioClip deathMusic;
 
     //Music controls
-    private AudioSource gameMusic;
+    public AudioSource gameMusic;
     private float timeCounter;
     private bool loopDone;
     private bool deathDone;

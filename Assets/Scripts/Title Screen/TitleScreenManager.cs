@@ -1,23 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class TitleScreenManager : MonoBehaviour
 {
 
-    public bool didPressEasy;
-    public bool didPressHard;
+    private AudioSource gameMusic;
     private GameObject checkMarkEasy;
     private GameObject checkMarkHard;
-    //gets called from the FadeController class
-    public bool fadeStart; 
-
 
     // Use this for initialization
     void Start()
     {
-        didPressEasy = false;
-        didPressHard = false;
-        fadeStart = false;
+        gameMusic = GameObject.Find("Audio").GetComponent<AudioSource>();
         checkMarkEasy = GameObject.FindGameObjectWithTag("EasySquare");
         checkMarkHard = GameObject.FindGameObjectWithTag("HardSquare");
         checkMarkEasy.SetActive(false);
@@ -27,36 +22,41 @@ public class TitleScreenManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
+
     void pressedEasy()
     {
-        didPressEasy = true;
-        if (didPressHard == true)
+        checkMarkEasy.SetActive(true);
+        if (checkMarkHard.activeInHierarchy)
         {
             checkMarkHard.SetActive(false);
         }
-        checkMarkEasy.SetActive(true);
-        didPressHard = false;
     }
+
     void pressedHard()
     {
-        didPressHard = true;
-        if (didPressEasy == true)
+        checkMarkHard.SetActive(true);
+        if (checkMarkEasy.activeInHierarchy)
         {
             checkMarkEasy.SetActive(false);
         }
-        checkMarkHard.SetActive(true);
-        didPressEasy = false;
     }
+
     public void startLevel()
     {
-        if (didPressEasy == true || didPressHard == true)
+        if (checkMarkEasy.activeInHierarchy || checkMarkHard.activeInHierarchy && !(checkMarkEasy.activeInHierarchy == checkMarkHard.activeInHierarchy))
         {
-            fadeStart = true;
-            Invoke("loadLevel", 1f);
+            //Call fade
+            gameMusic.Stop();
+            transform.GetComponent<SceneTransitionManager>().fadeIn(0.15f);
+            Invoke("loadLevel", 0.3f);
         }
     }
-    void loadLevel() {
-        Application.LoadLevel("Main");
+
+    void loadLevel()
+    {
+        SceneManager.LoadScene("Main");
     }
+
 }
