@@ -25,9 +25,9 @@ public class FadeOutController : MonoBehaviour {
                 fadePanel.GetComponent<Renderer>().material.color = new Color(1, 1, 1, duration += 0.125f);
                 duration += 0.0625f;
             }
-            }
         }
-	}
+    }
+}
 
    /* public void callFader() {
         for (float i = duration; i <= 1; i += 0.0625f) {

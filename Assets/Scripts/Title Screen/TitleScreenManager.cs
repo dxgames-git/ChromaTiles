@@ -53,7 +53,7 @@ public class TitleScreenManager : MonoBehaviour
         if (didPressEasy == true || didPressHard == true)
         {
             fadeStart = true;
-            Invoke("loadLevel", 1.25f);
+            Invoke("loadLevel", 1f);
         }
     }
     void loadLevel() {
