@@ -21,6 +21,7 @@ public class FadeInController : MonoBehaviour {
             {
                 //Debug.Log(Time.deltaTime);
                 fadePanel = new Color(1, 1, 1, duration -= 0.25f);
+                duration -= 0.25f;
             }
         }
 	}

@@ -13,6 +13,7 @@ public class FadeOutController : MonoBehaviour {
         duration = 0;
         fadePanel = GameObject.FindGameObjectWithTag("Fade");
         fadePanel.GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0);
+        checkFade.fadeStart = false;
 
     }
 	
@@ -21,8 +22,8 @@ public class FadeOutController : MonoBehaviour {
         if (checkFade.fadeStart == true) {
             if (duration <= 1)
             {
-                Debug.Log(Time.deltaTime);
                 fadePanel.GetComponent<Renderer>().material.color = new Color(1, 1, 1, duration += 0.125f);
+                duration += 0.0625f;
             }
             }
         }
