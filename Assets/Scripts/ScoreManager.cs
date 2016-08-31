@@ -10,9 +10,6 @@ public class ScoreManager : MonoBehaviour
     public Text highScoreText;
     public Text deathHighScore;
 
-    //public Text highScoreTextHard;
-    //public Text deathHighScoreHard;
-
     private float scoreCount;
     private float highScoreCount;
 

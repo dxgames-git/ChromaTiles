@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TitleScreenManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class TitleScreenManager : MonoBehaviour
     private AudioSource gameMusic;
     private GameObject checkMarkEasy;
     private GameObject checkMarkHard;
+
+    //displaying high scores
+    public Text easyHighScore;
+    public Text hardHighScore;
 
     // Use this for initialization
     void Start()
@@ -17,6 +22,14 @@ public class TitleScreenManager : MonoBehaviour
         checkMarkHard = GameObject.FindGameObjectWithTag("HardSquare");
         checkMarkEasy.SetActive(false);
         checkMarkHard.SetActive(false);
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            easyHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScore");
+        }
+        if (PlayerPrefs.HasKey("HighScoreHard"))
+        {
+            hardHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScoreHard");
+        }
     }
 
     // Update is called once per frame
