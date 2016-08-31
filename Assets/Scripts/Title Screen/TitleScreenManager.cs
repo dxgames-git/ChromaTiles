@@ -49,6 +49,7 @@ public class TitleScreenManager : MonoBehaviour
         {
             //Call fade
             gameMusic.Stop();
+            transform.GetComponent<AudioSource>().PlayDelayed(0f);
             transform.GetComponent<SceneTransitionManager>().fadeIn(0.15f);
             Invoke("loadLevel", 0.3f);
         }

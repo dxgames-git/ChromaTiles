@@ -49,6 +49,7 @@ public class BoxController : MonoBehaviour
         {
             GameObject glowEffect = (GameObject) Instantiate(glowParticle, new Vector3(0, other.gameObject.transform.position.y, -8f), gameObject.transform.rotation);
             glowEffect.transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            other.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().PlayDelayed(0f);
             //Increase Score
             Destroy(gameObject, 0.05f);
             scoreUp.touchRightBox();
