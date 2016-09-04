@@ -25,7 +25,7 @@ public class BackgroundController : MonoBehaviour
         float x = Mathf.Cos(currentTime / 10);
         float y = Mathf.Sin(currentTime / 10);
 
-        transform.position = new Vector3(8.69f * x, 2.5f * y + transform.parent.transform.position.y);
+        transform.position = new Vector3(8.69f * x, 2.5f * y + transform.parent.transform.position.y, transform.parent.position.z + 11f);
     }
 
 }

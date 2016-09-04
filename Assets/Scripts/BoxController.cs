@@ -15,9 +15,6 @@ public class BoxController : MonoBehaviour
     //Score
     private ScoreManager scoreUp;
 
-    //Particle System
-    public GameObject glowParticle;
-
     // Use this for initialization
     void Start()
     {
@@ -47,8 +44,7 @@ public class BoxController : MonoBehaviour
     {
         if (other.gameObject.GetComponent<SpriteRenderer>().color.Equals(boxColor))
         {
-            GameObject glowEffect = (GameObject) Instantiate(glowParticle, new Vector3(0, other.gameObject.transform.position.y, -8f), gameObject.transform.rotation);
-            glowEffect.transform.parent = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            GameObject.Find("Tiles").GetComponent<EffectController>().fadeOut(0.4f);
             other.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().PlayDelayed(0f);
             //Increase Score
             Destroy(gameObject, 0.05f);

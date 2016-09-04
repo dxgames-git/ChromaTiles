@@ -13,7 +13,6 @@ public class TitleScreenManager : MonoBehaviour
     //boolean for if the player has clicked the toggles
     private GameObject audioOn;
     private GameObject audioOff;
-    public bool toggleAudio;
 
     //displaying high scores
     public Text easyHighScore;
@@ -30,7 +29,6 @@ public class TitleScreenManager : MonoBehaviour
         audioOn = GameObject.FindGameObjectWithTag("audioOn");
         audioOff = GameObject.FindGameObjectWithTag("audioOff");
         audioOff.SetActive(false);
-        toggleAudio = true;
         if (PlayerPrefs.HasKey("HighScore"))
         {
             easyHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScore");
@@ -39,27 +37,32 @@ public class TitleScreenManager : MonoBehaviour
         {
             hardHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScoreHard");
         }
+        if (AudioListener.volume == 0f)
+        {
+            audioOn.SetActive(false);
+            audioOff.SetActive(true);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    public void checkMusic()
+
+    void checkMusic()
     {
         if (audioOn.activeInHierarchy)
         {
             audioOn.SetActive(false);
             audioOff.SetActive(true);
-            toggleAudio = false;
-            gameMusic.Pause();
+            AudioListener.volume = 0f;
         }
         else
         {
             audioOn.SetActive(true);
             audioOff.SetActive(false);
-            toggleAudio = true;
-            gameMusic.Play();
+            AudioListener.volume = 1f;
         }
     }
 
