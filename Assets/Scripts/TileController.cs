@@ -59,47 +59,25 @@ public class TileController : MonoBehaviour
         if (!stopMovement.isPaused && !stopMovement.isDead && !moving)
         {
             transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                var touch = Input.touches[0];
+                if (touch.position.x < Screen.width / 2)
+                {
+                    left();
+                }
+                else if (touch.position.x > Screen.width / 2)
+                {
+                    right();
+                }
+            }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                //Generate New Tile at the right
-                GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(width * scalar + width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
-                theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
-                theTile.transform.parent = transform;
-                //Assign values identical to the leftmost tile to the new right tile
-                GameObject leftTile = transform.GetChild(0).gameObject;
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    if (transform.GetChild(i).position.x <= (-(numTiles / 2) + (numTiles - numTiles)) * width + 0.1f)
-                    {
-                        leftTile = transform.GetChild(i).gameObject;
-                    }
-                }
-                theTile.GetComponent<SpriteRenderer>().color = leftTile.GetComponent<SpriteRenderer>().color;
-                //Move the tile parent
-                Move(-1);
-                //Delete left one that is out of bound
-                Destroy(leftTile, 0.06f);
+                left();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                //Generate New Tile at the left
-                GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(-width * scalar - width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
-                theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
-                theTile.transform.parent = transform;
-                //Assign values identical to the rightmost tile to the new left tile
-                GameObject rightTile = transform.GetChild(0).gameObject;
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    if (transform.GetChild(i).position.x >= (-(numTiles / 2) + (numTiles - 1)) * width - 0.1f)
-                    {
-                        rightTile = transform.GetChild(i).gameObject;
-                    }
-                }
-                theTile.GetComponent<SpriteRenderer>().color = rightTile.GetComponent<SpriteRenderer>().color;
-                //Move the tile parent
-                Move(1);
-                //Delete right one that is out of bound
-                Destroy(rightTile, 0.06f);
+                right();
             }
         }
         else if (!stopMovement.isPaused && !stopMovement.isDead && moving)
@@ -126,6 +104,50 @@ public class TileController : MonoBehaviour
         Target = new Vector3(transform.position.x + (dir * width), /**/theCamera.transform.localPosition.y);
 
         Update();
+    }
+
+    void left()
+    {
+        //Generate New Tile at the right
+        GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(width * scalar + width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
+        theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
+        theTile.transform.parent = transform;
+        //Assign values identical to the leftmost tile to the new right tile
+        GameObject leftTile = transform.GetChild(0).gameObject;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).position.x <= (-(numTiles / 2) + (numTiles - numTiles)) * width + 0.1f)
+            {
+                leftTile = transform.GetChild(i).gameObject;
+            }
+        }
+        theTile.GetComponent<SpriteRenderer>().color = leftTile.GetComponent<SpriteRenderer>().color;
+        //Move the tile parent
+        Move(-1);
+        //Delete left one that is out of bound
+        Destroy(leftTile, 0.06f);
+    }
+
+    void right()
+    {
+        //Generate New Tile at the left
+        GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(-width * scalar - width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
+        theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
+        theTile.transform.parent = transform;
+        //Assign values identical to the rightmost tile to the new left tile
+        GameObject rightTile = transform.GetChild(0).gameObject;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).position.x >= (-(numTiles / 2) + (numTiles - 1)) * width - 0.1f)
+            {
+                rightTile = transform.GetChild(i).gameObject;
+            }
+        }
+        theTile.GetComponent<SpriteRenderer>().color = rightTile.GetComponent<SpriteRenderer>().color;
+        //Move the tile parent
+        Move(1);
+        //Delete right one that is out of bound
+        Destroy(rightTile, 0.06f);
     }
 
 }

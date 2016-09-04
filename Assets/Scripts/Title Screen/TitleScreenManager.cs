@@ -91,9 +91,14 @@ public class TitleScreenManager : MonoBehaviour
             //Call fade
             gameMusic.Stop();
             transform.GetComponent<AudioSource>().PlayDelayed(0f);
-            transform.GetComponent<SceneTransitionManager>().fadeIn(0.15f);
-            Invoke("loadLevel", 0.3f);
+            Invoke("callFade", 0.2f);
         }
+    }
+
+    void callFade()
+    {
+        transform.GetComponent<SceneTransitionManager>().fadeIn(0.15f);
+        Invoke("loadLevel", 0.3f);
     }
 
     void loadLevel()
