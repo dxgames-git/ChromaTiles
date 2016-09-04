@@ -59,7 +59,7 @@ public class TileController : MonoBehaviour
         if (!stopMovement.isPaused && !stopMovement.isDead && !moving)
         {
             transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 var touch = Input.touches[0];
                 if (touch.position.x < Screen.width / 2)
@@ -86,7 +86,7 @@ public class TileController : MonoBehaviour
             Target = new Vector3(StartPosition.x + (direction * width), /**/theCamera.transform.localPosition.y);
             transform.position = Vector3.Lerp(StartPosition, Target, ElapsedTime / FinishTime);
             transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
-            if (ElapsedTime - .0035f >= FinishTime)
+            if (ElapsedTime - .007f >= FinishTime)
             {
                 moving = false;
             }
@@ -99,7 +99,7 @@ public class TileController : MonoBehaviour
         direction = dir;
 
         ElapsedTime = 0;
-        FinishTime = 0.06f;
+        FinishTime = 0.04f;
         StartPosition = transform.position;
         Target = new Vector3(transform.position.x + (dir * width), /**/theCamera.transform.localPosition.y);
 
