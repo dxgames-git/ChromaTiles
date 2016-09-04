@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private float timeCounter;
     private bool loopDone;
     private bool deathDone;
+    private TitleScreenManager isMusicOn;
 
     // Use this for initialization
     void Start()
@@ -34,6 +35,12 @@ public class UIManager : MonoBehaviour
         timeCounter = 0f;
         loopDone = false;
         deathDone = false;
+
+        isMusicOn = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<TitleScreenManager>();
+        if (isMusicOn.toggleAudio == false)
+        {
+            gameMusic.Stop();
+        }
     }
 
     // Update is called once per frame
@@ -45,7 +52,7 @@ public class UIManager : MonoBehaviour
         {
             switchPause();
         }
-
+        //if(isMusicOn.toggleAudio)
         //Loops music for gameplay
         if (timeCounter >= introMusic.length && !loopDone)
         {
