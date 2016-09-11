@@ -27,6 +27,9 @@ public class TileController : MonoBehaviour
         stopMovement = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
         BoxGenerator boxGen = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
+        float screenWidth = 2 * Camera.main.orthographicSize * 9f / 16f + 0.1f;
+        width = screenWidth / boxGen.numbers.Length;
+        scalar = numTiles / 2;
 
         for (int i = 0; i < numTiles * 3; i++) //(int i = 1; i <= numTiles; i++)
         {
@@ -42,10 +45,6 @@ public class TileController : MonoBehaviour
             Color tileColor = color[numbers[i % numTiles]];
             theTile.GetComponent<SpriteRenderer>().color = tileColor;
         }
-
-        float screenWidth = 2 * Camera.main.orthographicSize * 9f / 16f + 0.1f;
-        width = screenWidth / boxGen.numbers.Length;
-        scalar = numTiles / 2;
         Target = new Vector3(transform.position.x, Camera.main.transform.localPosition.y);
     }
 
