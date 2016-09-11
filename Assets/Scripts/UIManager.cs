@@ -63,8 +63,6 @@ public class UIManager : MonoBehaviour
             deathDone = true;
             deathPanel.SetActive(true);
             gameMusic.Stop();
-            gameMusic.clip = deathMusic;
-            gameMusic.PlayDelayed(0.05f);
 
             Time.timeScale = 0f;
         }

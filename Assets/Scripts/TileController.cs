@@ -10,14 +10,7 @@ public class TileController : MonoBehaviour
     //Stop tile control movement when paused or dead or animating
     private UIManager stopMovement;
 
-    //Tile "animation"
-    public bool moving;
-    private GameObject theCamera;
-
-    private int direction;
-    private float ElapsedTime;
     private float FinishTime;
-    private Vector3 StartPosition;
     private Vector3 Target;
 
     //Tile generation parameters
@@ -26,21 +19,25 @@ public class TileController : MonoBehaviour
     private float width;
     private int scalar;
 
+    //Test
+    IEnumerator co;
+    private float screenWidth;
+
     // Use this for initialization
     void Start()
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera").gameObject;
         numTiles = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
         boxGen = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
         stopMovement = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        moving = false;
-        width = 5.61f / boxGen.numbers.Length;
+
+        screenWidth = 2 * Camera.main.orthographicSize * 9f / 16f + 0.1f;
+        width = screenWidth / boxGen.numbers.Length;
         scalar = numTiles / 2;
 
-        for (int i = 1; i <= numTiles; i++) //(int i = 1; i <= numTiles; i++)
+        for (int i = 0; i < numTiles * 3; i++) //(int i = 1; i <= numTiles; i++)
         {
             //Calculate position of box and generate box
-            float x = (-(numTiles / 2) + (numTiles - i)) * width;
+            float x = -(numTiles * width + ((scalar) * width)) + (i * width);
             GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(x, -3.6f), transform.rotation);
             theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
             theTile.transform.parent = transform;
@@ -48,106 +45,103 @@ public class TileController : MonoBehaviour
             //Set Color of Box
             Color[] color = boxGen.color;
             int[] numbers = boxGen.numbers;
-            Color tileColor = color[numbers[i - 1]];
+            Color tileColor = color[numbers[i % numTiles]];
             theTile.GetComponent<SpriteRenderer>().color = tileColor;
         }
+
+        //Test
+        Target = new Vector3(transform.position.x, Camera.main.transform.localPosition.y);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!stopMovement.isPaused && !stopMovement.isDead && !moving)
+        if (!stopMovement.isPaused && !stopMovement.isDead)
         {
-            transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y);
+            if (Input.touchCount > 0)
             {
-                var touch = Input.touches[0];
-                if (touch.position.x < Screen.width / 2)
-                {
-                    left();
-                }
-                else if (touch.position.x > Screen.width / 2)
-                {
-                    right();
-                }
+                StartCoroutine(callTouches(0.1f, Input.touches));
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                left();
+                Move(-1);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                right();
+                Move(1);
             }
         }
-        else if (!stopMovement.isPaused && !stopMovement.isDead && moving)
+    }
+
+    IEnumerator callTouches(float time, Touch[] touches)
+    {
+        for (int i = 0; i < touches.Length; ++i)
         {
-            ElapsedTime += Time.deltaTime;
-            Target = new Vector3(StartPosition.x + (direction * width), /**/theCamera.transform.localPosition.y);
-            transform.position = Vector3.Lerp(StartPosition, Target, ElapsedTime / FinishTime);
-            transform.position = new Vector3(transform.position.x, theCamera.transform.position.y);
-            if (ElapsedTime - .007f >= FinishTime)
+            Touch touch = touches[i];
+            if (touch.phase == TouchPhase.Began)
             {
-                moving = false;
+                if (touch.position.x < Screen.width / 2)
+                {
+                    Move(-1);
+                }
+                else if (touch.position.x > Screen.width / 2)
+                {
+                    Move(1);
+                }
             }
+            yield return new WaitForSeconds(time);
         }
+    }
+
+    IEnumerator slideAnim(float aValue, float aTime, int dir)
+    {
+
+        //If there are no outside tiles on either side, generate
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, aValue, t), Camera.main.transform.localPosition.y);
+            yield return null;
+        }
+        float x = Mathf.Round(transform.position.x * 100) / 100;
+        if (Mathf.Abs(x) <= 0.04)
+        {
+            x = 0f;
+        }
+        transform.position = new Vector3(x, transform.position.y);
     }
 
     void Move(int dir)
     {
-        moving = true;
-        direction = dir;
-
-        ElapsedTime = 0;
-        FinishTime = 0.04f;
-        StartPosition = transform.position;
-        Target = new Vector3(transform.position.x + (dir * width), /**/theCamera.transform.localPosition.y);
-
-        Update();
+        Transform center = findClosest(0 + dir * (width / 2 - 0.05f));
+        Transform change = findClosest(dir * 30f);
+        change.position = new Vector3(center.position.x - dir * (width * (numTiles + scalar + 1)), change.position.y);
+        if (co != null)
+        {
+            StopCoroutine(co);
+        }
+        FinishTime = 0.1f;
+        Target += new Vector3((dir * width), 0);
+        co = slideAnim(Target.x, FinishTime, dir);
+        StartCoroutine(co);
     }
 
-    void left()
+    Transform findClosest(float x)
     {
-        //Generate New Tile at the right
-        GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(width * scalar + width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
-        theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
-        theTile.transform.parent = transform;
-        //Assign values identical to the leftmost tile to the new right tile
-        GameObject leftTile = transform.GetChild(0).gameObject;
+        Transform closest = null;
+        float minDist = Mathf.Infinity;
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).position.x <= (-(numTiles / 2) + (numTiles - numTiles)) * width + 0.1f)
+            Transform child = transform.GetChild(i);
+            float distance = Mathf.Abs(child.position.x - x);
+            if (distance < minDist)
             {
-                leftTile = transform.GetChild(i).gameObject;
+                minDist = distance;
+                closest = child;
             }
         }
-        theTile.GetComponent<SpriteRenderer>().color = leftTile.GetComponent<SpriteRenderer>().color;
-        //Move the tile parent
-        Move(-1);
-        //Delete left one that is out of bound
-        Destroy(leftTile, 0.06f);
-    }
-
-    void right()
-    {
-        //Generate New Tile at the left
-        GameObject theTile = (GameObject) Instantiate(Tile, new Vector3(-width * scalar - width, /**/theCamera.transform.position.y - 3.6f), transform.rotation);
-        theTile.transform.localScale = new Vector3(theTile.transform.localScale.x * 3f / numTiles, theTile.transform.localScale.y);
-        theTile.transform.parent = transform;
-        //Assign values identical to the rightmost tile to the new left tile
-        GameObject rightTile = transform.GetChild(0).gameObject;
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (transform.GetChild(i).position.x >= (-(numTiles / 2) + (numTiles - 1)) * width - 0.1f)
-            {
-                rightTile = transform.GetChild(i).gameObject;
-            }
-        }
-        theTile.GetComponent<SpriteRenderer>().color = rightTile.GetComponent<SpriteRenderer>().color;
-        //Move the tile parent
-        Move(1);
-        //Delete right one that is out of bound
-        Destroy(rightTile, 0.06f);
+        return closest;
     }
 
 }

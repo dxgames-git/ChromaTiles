@@ -9,7 +9,6 @@ public class BoxController : MonoBehaviour
 
     //Setting the Box's color
     private GameObject box;
-    private GameObject theCamera;
     public Color boxColor;
 
     //Score
@@ -18,8 +17,6 @@ public class BoxController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-
         Color[] color = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().color;
         int[] numbers = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().numbers;
         int picker = numbers[(int) (Random.value * numbers.Length)];
@@ -34,7 +31,7 @@ public class BoxController : MonoBehaviour
     void Update()
     {
         transform.Rotate(Vector3.forward * -90 * Time.deltaTime);
-        if (transform.position.y + 10f < theCamera.transform.position.y)
+        if (transform.position.y + 10f < Camera.main.transform.position.y)
         {
             Destroy(gameObject, 0.3f);
         }
@@ -47,8 +44,8 @@ public class BoxController : MonoBehaviour
             GameObject.Find("Tiles").GetComponent<EffectController>().fadeOut(0.4f);
             other.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().PlayDelayed(0f);
             //Increase Score
-            Destroy(gameObject, 0.05f);
             scoreUp.touchRightBox();
+            Destroy(gameObject);
         }
         else
         {

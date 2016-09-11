@@ -6,13 +6,10 @@ public class SceneTransitionManager : MonoBehaviour
 
     public GameObject theFade;
     private GameObject fadeObject;
-    private GameObject theCamera;
 
     // Use this for initialization
     void Start()
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-
     }
 
     // Update is called once per frame
@@ -34,9 +31,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void fadeIn(float duration)
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        fadeObject = (GameObject) Instantiate(theFade, new Vector3(theCamera.transform.position.x, theCamera.transform.position.y, theCamera.transform.position.z + 1f), transform.rotation);
-        fadeObject.transform.parent = theCamera.transform;
+        fadeObject = (GameObject) Instantiate(theFade, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1f), transform.rotation);
+        fadeObject.transform.parent = Camera.main.transform;
         fadeObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0);
         StartCoroutine(FadeTo(1.0f, duration));
         //wtf
@@ -44,9 +40,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void fadeOut(float duration)
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        fadeObject = (GameObject) Instantiate(theFade, new Vector3(theCamera.transform.position.x, theCamera.transform.position.y, theCamera.transform.position.z + 1f), transform.rotation);
-        fadeObject.transform.parent = theCamera.transform;
+        fadeObject = (GameObject) Instantiate(theFade, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1f), transform.rotation);
+        fadeObject.transform.parent = Camera.main.transform;
         fadeObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1);
         StartCoroutine(FadeTo(0.0f, duration));
         Destroy(fadeObject, duration + 0.15f);

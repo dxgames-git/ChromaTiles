@@ -12,16 +12,14 @@ public class BoxGenerator : MonoBehaviour
     public Color[] color;
     public int[] numbers;
 
-    private GameObject theCamera;
     private GameObject[] objects;
 
     // Use this for initialization
     void Start()
     {
-        theCamera = GameObject.FindGameObjectWithTag("MainCamera");
         gameDifficulty = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
 
-        transform.position = new Vector3(0, theCamera.transform.position.y + 7f);
+        transform.position = new Vector3(0, Camera.main.transform.position.y + 7f);
 
         color = new Color[7];
         numbers = new int[gameDifficulty];
@@ -62,9 +60,9 @@ public class BoxGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (theCamera.transform.position.y + 10f > transform.position.y)
+        if (Camera.main.transform.position.y + 10f > transform.position.y)
         {
-            Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
+            //Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
             transform.position = new Vector3(0, transform.position.y + 6.75f);
         }
     }
