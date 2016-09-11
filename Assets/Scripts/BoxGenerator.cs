@@ -32,7 +32,7 @@ public class BoxGenerator : MonoBehaviour
         color[5] = Color.cyan;
         color[6] = Color.magenta;
 
-        //Pick "gameDifficulty" different colors for tiles based on difficulty
+        //Pick x different colors for tiles based on difficulty x
         for (int i = 0; i < numbers.Length; i++)
         {
             numbers[i] = color.Length;
@@ -62,7 +62,7 @@ public class BoxGenerator : MonoBehaviour
     {
         if (Camera.main.transform.position.y + 10f > transform.position.y)
         {
-            //Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
+            Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
             transform.position = new Vector3(0, transform.position.y + 6.75f);
         }
     }

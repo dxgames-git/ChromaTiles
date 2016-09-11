@@ -7,32 +7,26 @@ public class TileController : MonoBehaviour
     //Generic Tile Prefab
     public GameObject Tile;
 
-    //Stop tile control movement when paused or dead or animating
+    //Stop tile movement when paused or dead
     private UIManager stopMovement;
 
-    private float FinishTime;
-    private Vector3 Target;
-
     //Tile generation parameters
-    private BoxGenerator boxGen;
     private int numTiles;
     private float width;
     private int scalar;
 
-    //Test
-    IEnumerator co;
-    private float screenWidth;
+    //Slide animation fields
+    private IEnumerator co;
+    private Vector3 Target;
+    private float FinishTime;
 
     // Use this for initialization
     void Start()
     {
         numTiles = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>().level;
-        boxGen = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
         stopMovement = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
 
-        screenWidth = 2 * Camera.main.orthographicSize * 9f / 16f + 0.1f;
-        width = screenWidth / boxGen.numbers.Length;
-        scalar = numTiles / 2;
+        BoxGenerator boxGen = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>();
 
         for (int i = 0; i < numTiles * 3; i++) //(int i = 1; i <= numTiles; i++)
         {
@@ -49,9 +43,10 @@ public class TileController : MonoBehaviour
             theTile.GetComponent<SpriteRenderer>().color = tileColor;
         }
 
-        //Test
+        float screenWidth = 2 * Camera.main.orthographicSize * 9f / 16f + 0.1f;
+        width = screenWidth / boxGen.numbers.Length;
+        scalar = numTiles / 2;
         Target = new Vector3(transform.position.x, Camera.main.transform.localPosition.y);
-
     }
 
     // Update is called once per frame
@@ -62,7 +57,21 @@ public class TileController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y);
             if (Input.touchCount > 0)
             {
-                StartCoroutine(callTouches(0.1f, Input.touches));
+                for (int i = 0; i < Input.touchCount; ++i)
+                {
+                    Touch touch = Input.GetTouch(i);
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        if (touch.position.x < Screen.width / 2)
+                        {
+                            Move(-1);
+                        }
+                        else if (touch.position.x > Screen.width / 2)
+                        {
+                            Move(1);
+                        }
+                    }
+                }
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -75,48 +84,32 @@ public class TileController : MonoBehaviour
         }
     }
 
-    IEnumerator callTouches(float time, Touch[] touches)
-    {
-        for (int i = 0; i < touches.Length; ++i)
-        {
-            Touch touch = touches[i];
-            if (touch.phase == TouchPhase.Began)
-            {
-                if (touch.position.x < Screen.width / 2)
-                {
-                    Move(-1);
-                }
-                else if (touch.position.x > Screen.width / 2)
-                {
-                    Move(1);
-                }
-            }
-            yield return new WaitForSeconds(time);
-        }
-    }
-
+    //Coroutine for tile animation
     IEnumerator slideAnim(float aValue, float aTime, int dir)
     {
-
-        //If there are no outside tiles on either side, generate
+        //Move outmost tile to the other side
+        Transform change = findClosest(dir * 30f);
+        Transform changeTo = findClosest(-dir * 30f);
+        change.position = new Vector3(changeTo.position.x - (dir * width), change.position.y);
+        //Actually move the tile parent
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
         {
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, aValue, t), Camera.main.transform.localPosition.y);
             yield return null;
         }
+        //Round position so it doesn't accumulate error
         float x = Mathf.Round(transform.position.x * 100) / 100;
         if (Mathf.Abs(x) <= 0.04)
         {
             x = 0f;
         }
+        //Ensure tiles stay level vertically
         transform.position = new Vector3(x, transform.position.y);
     }
 
+    //Stop previous motion and start new one
     void Move(int dir)
     {
-        Transform center = findClosest(0 + dir * (width / 2 - 0.05f));
-        Transform change = findClosest(dir * 30f);
-        change.position = new Vector3(center.position.x - dir * (width * (numTiles + scalar + 1)), change.position.y);
         if (co != null)
         {
             StopCoroutine(co);
@@ -127,6 +120,7 @@ public class TileController : MonoBehaviour
         StartCoroutine(co);
     }
 
+    //Find transform closest horizontally to given x
     Transform findClosest(float x)
     {
         Transform closest = null;
