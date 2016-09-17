@@ -13,6 +13,7 @@ public class BoxGenerator : MonoBehaviour
     public int[] numbers;
 
     private GameObject[] objects;
+    private int lastColor;
 
     // Use this for initialization
     void Start()
@@ -50,6 +51,9 @@ public class BoxGenerator : MonoBehaviour
             }
             numbers[i] = theNumber;
         }
+
+        lastColor = numbers[(int) (Random.value * numbers.Length)];
+
         //Generating different objects
         objects = new GameObject[3];
         objects[0] = box;
@@ -62,7 +66,14 @@ public class BoxGenerator : MonoBehaviour
     {
         if (Camera.main.transform.position.y + 10f > transform.position.y)
         {
-            Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
+            int sub = (int) (Random.value * numbers.Length);
+            while (lastColor == numbers[sub])
+            {
+                sub = (int) (Random.value * numbers.Length);
+            }
+            lastColor = numbers[sub];
+            GameObject theBox = (GameObject) Instantiate(objects[(int) (Random.value * 3)], new Vector3(0, transform.position.y), transform.rotation);
+            theBox.GetComponent<SpriteRenderer>().color = color[lastColor];
             transform.position = new Vector3(0, transform.position.y + 6.75f);
         }
     }

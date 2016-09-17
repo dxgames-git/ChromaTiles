@@ -51,9 +51,9 @@ public class TileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y);
         if (!stopMovement.isPaused && !stopMovement.isDead)
         {
-            transform.position = new Vector3(transform.position.x, Camera.main.transform.position.y);
             if (Input.touchCount > 0)
             {
                 for (int i = 0; i < Input.touchCount; ++i)
@@ -79,6 +79,13 @@ public class TileController : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 Move(1);
+            }
+        }
+        else if (stopMovement.isPaused || stopMovement.isDead)
+        {
+            if (co != null)
+            {
+                StopCoroutine(co);
             }
         }
     }

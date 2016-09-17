@@ -9,7 +9,6 @@ public class BoxController : MonoBehaviour
 
     //Setting the Box's color
     private GameObject box;
-    public Color boxColor;
 
     //Score
     private ScoreManager scoreUp;
@@ -17,14 +16,8 @@ public class BoxController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Color[] color = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().color;
-        int[] numbers = GameObject.FindGameObjectWithTag("BoxGenerator").GetComponent<BoxGenerator>().numbers;
-        int picker = numbers[(int) (Random.value * numbers.Length)];
-        gameObject.GetComponent<SpriteRenderer>().color = color[picker];
-        boxColor = color[picker];
-
         deadPanel = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        scoreUp = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScoreManager>();
+        scoreUp = Camera.main.GetComponent<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -39,7 +32,7 @@ public class BoxController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<SpriteRenderer>().color.Equals(boxColor))
+        if (other.gameObject.GetComponent<SpriteRenderer>().color.Equals(gameObject.GetComponent<SpriteRenderer>().color))
         {
             GameObject.Find("Tiles").GetComponent<EffectController>().fadeOut(0.4f);
             other.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().PlayDelayed(0f);

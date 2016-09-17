@@ -59,7 +59,6 @@ public class UIManager : MonoBehaviour
         //Changes music for death screen
         if (isDead && !deathDone)
         {
-            correctPos();
             deathDone = true;
             deathPanel.SetActive(true);
             gameMusic.Stop();
@@ -75,7 +74,6 @@ public class UIManager : MonoBehaviour
     //Gets called whenever the pause button is pressed
     public void switchPause()
     {
-        correctPos();
         if (!isPaused)
         {
             Time.timeScale = 0.0f; //Paused
@@ -103,12 +101,6 @@ public class UIManager : MonoBehaviour
         gameMusic.Stop();
         SceneManager.LoadScene("Title Screen");
         Start();
-    }
-
-    void correctPos()
-    {
-        GameObject tile = GameObject.Find("Tiles");
-        tile.transform.position = new Vector3(tile.transform.position.x, GameObject.FindGameObjectWithTag("MainCamera").transform.position.y, tile.transform.position.z);
     }
 
 }
