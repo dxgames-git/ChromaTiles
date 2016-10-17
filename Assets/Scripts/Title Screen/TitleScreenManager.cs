@@ -66,7 +66,7 @@ public class TitleScreenManager : MonoBehaviour
         }
     }
 
-    void pressedEasy()
+    public void pressedEasy()
     {
         checkMarkEasy.SetActive(true);
         if (checkMarkHard.activeInHierarchy)
@@ -75,7 +75,7 @@ public class TitleScreenManager : MonoBehaviour
         }
     }
 
-    void pressedHard()
+    public void pressedHard()
     {
         checkMarkHard.SetActive(true);
         if (checkMarkEasy.activeInHierarchy)
