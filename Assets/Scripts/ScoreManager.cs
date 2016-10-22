@@ -8,6 +8,15 @@ public class ScoreManager : MonoBehaviour
 
     public Text scoreText;
     public Text highScoreText;
+
+    //Pause OR Death Menu Scores
+    public Text pauseScoreText;
+    public Text pauseHighScoreText;
+    public Text levelName;
+    public Text deathName;
+
+    //Death Menu Scores
+    public Text deathScore;
     public Text deathHighScore;
 
     private float scoreCount;
@@ -24,14 +33,23 @@ public class ScoreManager : MonoBehaviour
     {
         whichLevel = GameObject.FindGameObjectWithTag("LevelChooser").GetComponent<LevelChooser>();
         level = whichLevel.level;
-        if (level == 3 && PlayerPrefs.HasKey("HighScore"))
+        if (level == 3)
         {
-            highScoreCount = PlayerPrefs.GetFloat("HighScore");
+            levelName.text = "EASY";
+            if (PlayerPrefs.HasKey("HighScore"))
+            {
+                highScoreCount = PlayerPrefs.GetFloat("HighScore");
+            }
         }
-        else if (level == 5 && PlayerPrefs.HasKey("HighScoreHard"))
+        else if (level == 5)
         {
-            highScoreCount = PlayerPrefs.GetFloat("HighScoreHard");
+            levelName.text = "HARD";
+            if(PlayerPrefs.HasKey("HighScoreHard"))
+            { 
+                highScoreCount = PlayerPrefs.GetFloat("HighScoreHard");
+            }
         }
+        deathName.text = levelName.text;
     }
 
     // Update is called once per frame
@@ -51,7 +69,10 @@ public class ScoreManager : MonoBehaviour
         }
         scoreText.text = "Score: " + Mathf.Round(scoreCount);
         highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
-        deathHighScore.text = highScoreText.text;
+        pauseScoreText.text = "" + Mathf.Round(scoreCount);
+        pauseHighScoreText.text = "High: " + Mathf.Round(highScoreCount);
+        deathScore.text = pauseScoreText.text;
+        deathHighScore.text = pauseHighScoreText.text;
     }
     public void touchRightBox()
     {
