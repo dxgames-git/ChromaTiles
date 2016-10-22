@@ -15,8 +15,8 @@ public class TitleScreenManager : MonoBehaviour
     private GameObject audioOff;
 
     //displaying high scores
-    public Text easyHighScore;
-    public Text hardHighScore;
+    public Text easyScore;
+    public Text hardScore;
 
     // Use this for initialization
     void Start()
@@ -31,18 +31,19 @@ public class TitleScreenManager : MonoBehaviour
         audioOff.SetActive(false);
         if (PlayerPrefs.HasKey("HighScore"))
         {
-            easyHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScore");
+            easyScore.text = "" + PlayerPrefs.GetFloat("HighScore");
         }
         if (PlayerPrefs.HasKey("HighScoreHard"))
         {
-            hardHighScore.text = "HS : " + PlayerPrefs.GetFloat("HighScoreHard");
+            hardScore.text = "" + PlayerPrefs.GetFloat("HighScoreHard");
         }
+
         if (AudioListener.volume == 0f)
         {
             audioOn.SetActive(false);
             audioOff.SetActive(true);
         }
-
+        //pressedEasy();
     }
 
     // Update is called once per frame

@@ -4,14 +4,12 @@ using System.Collections;
 public class TitleRing : MonoBehaviour
 {
 
-    public Sprite image;
     private int dir;
 
     // Use this for initialization
     void Start()
     {
 
-        gameObject.GetComponent<SpriteRenderer>().sprite = image;
         dir = (int) (Random.value * 2f);
         if (dir < 1)
             dir = -1;
