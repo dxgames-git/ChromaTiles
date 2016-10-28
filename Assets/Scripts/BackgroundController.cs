@@ -4,32 +4,36 @@ using System.Collections;
 public class BackgroundController : MonoBehaviour
 {
 
-    //Array of background sprites from folder
-    public Sprite[] images = new Sprite[10];
-
-    Sprite image;
+    GameObject other;
     float currentTime = 0f;
+    Vector3 scale;
 
     // Use this for initialization
     void Start()
     {
-        //Initializes background randomly to one of the ten
-        image = images[(int) (Random.value * images.Length)];
-        gameObject.GetComponent<SpriteRenderer>().sprite = image;
+        if (gameObject.name.Equals("Background1"))
+        {
+            other = GameObject.Find("Background2");
+        }
+        else
+        {
+            other = GameObject.Find("Background1");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        //Make background move relative to the camera in an ellipse of width 8.69f and height 2.5f
         currentTime += Time.deltaTime;
-
-        float x = Mathf.Cos(currentTime / 10);
-        float y = Mathf.Sin(currentTime / 10);
-
-        transform.position = new Vector3(8.69f * x, 2.5f * y + transform.parent.transform.position.y, transform.parent.position.z + 11f);*/
-
+        if (currentTime < 45f)
+        {
+            scale = new Vector3(0, -(5f * currentTime / 45f) * Time.deltaTime);
+        }
+        transform.position += scale;
+        if (transform.localPosition.y < -13f)
+        {
+            transform.position = new Vector3(transform.position.x, other.transform.position.y + 12.9f);
+        }
     }
 
 }

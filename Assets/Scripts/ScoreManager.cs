@@ -67,8 +67,8 @@ public class ScoreManager : MonoBehaviour
                 PlayerPrefs.SetFloat("HighScoreHard", highScoreCount);
             }
         }
-        scoreText.text = "Score: " + Mathf.Round(scoreCount);
-        highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
+        scoreText.text = "" + Mathf.Round(scoreCount);
+        //highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
         pauseScoreText.text = "" + Mathf.Round(scoreCount);
         pauseHighScoreText.text = "High: " + Mathf.Round(highScoreCount);
         deathScore.text = pauseScoreText.text;
