@@ -61,13 +61,16 @@ public class TileController : MonoBehaviour
                     Touch touch = Input.GetTouch(i);
                     if (touch.phase == TouchPhase.Began)
                     {
-                        if (touch.position.x < Screen.width / 2)
+                        if (touch.position.y < Screen.height * 0.8f)
                         {
-                            Move(-1);
-                        }
-                        else if (touch.position.x > Screen.width / 2)
-                        {
-                            Move(1);
+                            if (touch.position.x < Screen.width / 2)
+                            {
+                                Move(-1);
+                            }
+                            else if (touch.position.x > Screen.width / 2)
+                            {
+                                Move(1);
+                            }
                         }
                     }
                 }

@@ -13,7 +13,6 @@ public class TitleRing : MonoBehaviour
         dir = (int) (Random.value * 2f);
         if (dir < 1)
             dir = -1;
-
     }
 
     // Update is called once per frame
@@ -23,4 +22,5 @@ public class TitleRing : MonoBehaviour
         transform.Rotate(Vector3.forward * -20 * dir * Time.deltaTime);
 
     }
+
 }

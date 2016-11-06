@@ -32,7 +32,7 @@ public class EffectController : MonoBehaviour
 
     public void fadeOut(float duration)
     {
-        fadeObject = (GameObject) Instantiate(fadeEffect, new Vector3(0, transform.position.y - 3.1f, Camera.main.transform.position.z + 10.5f), transform.rotation);
+        fadeObject = (GameObject) Instantiate(fadeEffect, new Vector3(0, transform.position.y - 3.35f, Camera.main.transform.position.z + 10.5f), transform.rotation);
         fadeObject.transform.parent = Camera.main.transform;
         fadeObject.transform.position = new Vector3(fadeObject.transform.position.x, fadeObject.transform.position.y, fadeObject.transform.parent.position.z + 10.5f);
         StartCoroutine(FadeTo(0.0f, duration));

@@ -7,7 +7,6 @@ public class ScoreManager : MonoBehaviour
 {
 
     public Text scoreText;
-    public Text highScoreText;
 
     //Pause OR Death Menu Scores
     public Text pauseScoreText;
@@ -68,7 +67,6 @@ public class ScoreManager : MonoBehaviour
             }
         }
         scoreText.text = "" + Mathf.Round(scoreCount);
-        //highScoreText.text = "High Score: " + Mathf.Round(highScoreCount);
         pauseScoreText.text = "" + Mathf.Round(scoreCount);
         pauseHighScoreText.text = "High: " + Mathf.Round(highScoreCount);
         deathScore.text = pauseScoreText.text;

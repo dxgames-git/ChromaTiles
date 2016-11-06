@@ -31,20 +31,21 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void fadeIn(float duration)
     {
+        StopCoroutine("FadeTo");
         fadeObject = (GameObject) Instantiate(theFade, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1f), transform.rotation);
         fadeObject.transform.parent = Camera.main.transform;
         fadeObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0);
         StartCoroutine(FadeTo(1.0f, duration));
-        //wtf
     }
 
     public void fadeOut(float duration)
     {
+        StopCoroutine("FadeTo");
         fadeObject = (GameObject) Instantiate(theFade, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1f), transform.rotation);
         fadeObject.transform.parent = Camera.main.transform;
         fadeObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1);
         StartCoroutine(FadeTo(0.0f, duration));
-        Destroy(fadeObject, duration + 0.15f);
+        Destroy(fadeObject, duration + 0.20f);
     }
 
 

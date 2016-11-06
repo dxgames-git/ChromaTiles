@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     private bool deathDone;
     private TitleScreenManager isMusicOn;
 
+    private GameObject ScoreText;
+    private GameObject Manager;
+
     // Use this for initialization
     void Start()
     {
@@ -35,6 +38,9 @@ public class UIManager : MonoBehaviour
         timeCounter = 0f;
         loopDone = false;
         deathDone = false;
+
+        ScoreText = GameObject.Find("ScoreText");
+        Manager = GameObject.Find("Manager");
     }
 
     // Update is called once per frame
@@ -60,7 +66,9 @@ public class UIManager : MonoBehaviour
         if (isDead && !deathDone)
         {
             deathDone = true;
+            pausePanel.SetActive(false);
             deathPanel.SetActive(true);
+            ScoreText.SetActive(false);
             gameMusic.Stop();
 
             Time.timeScale = 0f;
@@ -80,12 +88,14 @@ public class UIManager : MonoBehaviour
             isPaused = true; //Required for recognizing which toggle it is.
             gameMusic.Pause();
             pausePanel.SetActive(true);
+            ScoreText.SetActive(false);
             return;
         }
         Time.timeScale = 1.0f; //Unpaused
         isPaused = false;
         gameMusic.UnPause();
         pausePanel.SetActive(false);
+        ScoreText.SetActive(true);
     }
 
     public void restart()
@@ -99,8 +109,23 @@ public class UIManager : MonoBehaviour
     {
         //Application.LoadLevel("Title Screen"); is outdated *Had to include "using UnityEngine.SceneManagement;" up top
         gameMusic.Stop();
-        SceneManager.LoadScene("Title Screen");
+        Time.timeScale = 1.0f;
+        pausePanel.SetActive(false);
+        deathPanel.SetActive(false);
+        //Manager.GetComponent<SceneTransitionManager>().fadeIn(0.3f);
+        callFade();
         Start();
+    }
+
+    void callFade()
+    {
+        Manager.GetComponent<SceneTransitionManager>().fadeIn(0.15f);
+        Invoke("loadLevel", 0.2f);
+    }
+
+    void loadLevel()
+    {
+        SceneManager.LoadScene("Title Screen");
     }
 
 }
