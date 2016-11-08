@@ -89,6 +89,7 @@ public class UIManager : MonoBehaviour
             gameMusic.Pause();
             pausePanel.SetActive(true);
             ScoreText.SetActive(false);
+            AdManager.Instance.ShowBanner();
             return;
         }
         Time.timeScale = 1.0f; //Unpaused
